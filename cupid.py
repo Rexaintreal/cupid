@@ -1082,4 +1082,4 @@ def delete_user_from_file(username):
             file.write(json.dumps(user) + '\n')
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='192.168.1.34', allow_unsafe_werkzeug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
