@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <!-- Include necessary libraries -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <style>
+        /* Add custom styles here */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feedback-form {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px; /* Set maximum width */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: inline-block; /* Make it inline-block to center */
+            text-align: left; /* Align the content to the left */
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .gratitude-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1 class="title">Feedback</h1>
+            <!-- Form is placed inside the container -->
+            <form action="/feedback" method="post">
+
+                <form action="/feedback" method="post">
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Enter your name" name="name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Email (optional)</label>
+                        <div class="control">
+                            <input class="input" type="email" placeholder="Enter your email" name="email">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Feedback</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="Enter your feedback" name="feedback"></textarea>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+            <!-- Gratitude message -->
+            <p class="gratitude-message">Thank you for taking the time to provide us with your valuable feedback. We appreciate your contribution to improving our platform!</p>
+
+            <!-- Back button to go back to /home -->
+            <div class="back-button">
+                <a class="button is-link" href="/home">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

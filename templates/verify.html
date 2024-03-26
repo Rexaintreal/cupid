@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Verify</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        function togglePassword(fieldId, icon) {
+            var x = document.getElementById(fieldId);
+            if (x) {
+                if (x.type === "password") {
+                    x.type = "text";
+                    if (icon.querySelector('i').classList.contains('fa-eye')) {
+                        icon.querySelector('i').classList.remove('fa-eye');
+                    }
+                    icon.querySelector('i').classList.add('fa-eye-slash');
+                } else {
+                    x.type = "password";
+                    if (icon.querySelector('i').classList.contains('fa-eye-slash')) {
+                        icon.querySelector('i').classList.remove('fa-eye-slash');
+                    }
+                    icon.querySelector('i').classList.add('fa-eye');
+                }
+            } else {
+                console.error(`Password input field with ID '${fieldId}' not found.`);
+            }
+        }
+    </script>
+    
+    <section class="section">
+        <div class="container custom-container">
+            <div class="columns is-centered">
+                <div class="column is-10">
+                    <h1 class="title has-text-centered">Verify</h1>
+                    <form action="#" method="post">
+                        <div class="field">
+                            <label class="label">Verification Code</label>
+                            <div class="control">
+                                <input class="input" type="text" pattern="[0-9]{6}" placeholder="Enter your 6 digit code" name="verification_code">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button   btn-color is-fullwidth" type="submit">Verify</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="has-text-centered">Can't find your 6-digit code in your mail app? Check the spam folder.</p>
+                    <div class="text-red-500 is-centered">{{ error }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

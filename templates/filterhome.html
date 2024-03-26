@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Filtered Home</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a href="/premium"><i class="fas fa-dollar"></i><span> Premium</span></a>
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text" href="/filtered">Filtered Users</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+        <a href="/home"><i class="fas fa-right-from-bracket"></i><span> Back</span></a>
+    </div>
+
+    <!-- Cards for filtered users -->
+    <div class="container" style="margin-top: 75px;">
+        <div class="columns is-multiline">
+            {% for user_data in filtered_users_data %}
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64 circular-profile-pic">
+                                    <img src="{{ user_data.profile_picture_url }}" alt="Profile Picture">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">{{ user_data.username }}</p>
+                                <p class="subtitle is-6">{{ user_data.name }}</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p><strong>Class:</strong> {{ user_data.class }}</p>
+                            <p><strong>Section:</strong> {{ user_data.section }}</p>
+                            <p><strong>School:</strong> {{ user_data.school }}</p>
+                            <p><strong>Bio:</strong> {{ user_data.bio }}</p>
+                            <p><strong>Age:</strong> {{ user_data.age }}</p>
+                            <p><strong>Hobbies:</strong> {{ user_data.hobbies }}</p>
+                            <p><strong>What I like about it:</strong> {{ user_data.hobby_likes }}</p>
+                        </div>
+                    </div>
+                    <form id="matchForm_{{ loop.index }}" action="/match" method="POST" class="match-form">
+                        <input type="hidden" name="user_id" value="{{ user_data.username }}">
+                        <button type="submit" class="card-footer-item match-button">
+                            <span class="icon is-small">
+                                <i class="fas fa-heart"></i>
+                            </span>
+                            <span>Match</span>
+                        </button>
+                    </form>
+                    <!-- Notification container -->
+                    <div id="notification-overlay_{{ loop.index }}" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9998;"></div>
+                    <div id="notification-container_{{ loop.index }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+                        <div id="notification" class="message is-success" style="max-width: 80%; text-align: center;">
+                            <div class="message-body">
+                                Match sent!
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Notification container -->
+                    <script>
+                        document.getElementById("matchForm_{{ loop.index }}").addEventListener("submit", function(event) {
+                            event.preventDefault(); // Prevent the default form submission
+
+                            // Show notification
+                            var notificationContainer = document.getElementById('notification-container_{{ loop.index }}');
+                            var notification = notificationContainer.querySelector('.message');
+                            notificationContainer.style.display = 'flex';
+                            notification.style.display = 'block';
+
+                            // Hide notification after 4-5 seconds
+                            setTimeout(function() {
+                                notificationContainer.style.display = 'none';
+                                notification.style.display = 'none';
+                                document.getElementById("matchForm_{{ loop.index }}").submit(); // Proceed with form submission after notification
+                            }, 1000); // 4 seconds delay
+                        });
+                    </script>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- The bottom navigation menu -->
+    <div class="navbar fixed-bottom">
+        <a class="active" href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+</body>
+
+</html>

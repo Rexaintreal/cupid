@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Setup</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        .profile-pic-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 2px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="container setup-container">
+            <h1 class="title">Setup</h1>
+            <div class="box">
+                <form id="setupForm" action="/setup" method="post" enctype="multipart/form-data">
+                    <div class="step active" id="step1">
+                        <div class="field">
+                            <label class="setup-label">Name:</label>
+                            <div class="control">
+                                <input class="input" type="text" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="setup-label">Class:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select id="class" name="class" required>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="setup-label">Section:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select id="section" name="section" required>
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="D">D</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="field">
+                            <label class="setup-label">School:</label>
+                            <div class="control">
+                                <input class="input" type="text" id="school" name="school" required>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="field">
+                            <label class="setup-label">Bio</label>
+                            <div class="control">
+                                <input class="input" type="text" id="bio" name="bio" required>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step5">
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="setup-label">Age:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="number" id="age" name="age" required min="14">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="setup-label">Gender:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="select">
+                                            <select id="gender" name="gender" required>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step6">
+                        <div class="field">
+                            <label class="setup-label">Profile Picture:</label>
+                            <div class="control">
+                                <input type="file" id="profilePicInput" name="profilePicInput" accept="image/*" onchange="previewProfilePic(event)" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <img id="profilePicPreview" class="profile-pic-preview" src="#" alt="Profile Picture Preview">
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step7">
+                        <div class="field">
+                            <label class="setup-label">Hobbies:</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select id="hobbies" name="hobbies" required>
+                                        <option value="sports">Sports</option>
+                                        <option value="music">Music</option>
+                                        <option value="reading">Reading</option>
+                                        <option value="photography">Photography</option>
+                                        <option value="drawing_painting">Drawing/Painting</option>
+                                        <option value="writing_poetry">Writing/Poetry</option>
+                                        <option value="dance">Dance</option>
+                                        <option value="cooking_baking">Cooking/Baking</option>
+                                        <option value="gardening">Gardening</option>
+                                        <option value="coding_programming">Coding/Programming</option>
+                                        <option value="gaming">Gaming</option>
+                                        <option value="fitness_exercise">Fitness/Exercise</option>
+                                        <option value="yoga_meditation">Yoga/Meditation</option>
+                                        <option value="crafting">Crafting</option>
+                                        <option value="diy_projects">DIY Projects</option>
+                                        <option value="graphic_design">Graphic Design</option>
+                                        <option value="skateboarding">Skateboarding</option>
+                                        <option value="martial_arts">Martial Arts</option>
+                                        <option value="astronomy">Astronomy</option>
+                                        <option value="music_production">Music Production</option>
+                                        <option value="acting_theater">Acting/Theater</option>
+                                        <option value="volunteering">Volunteering/Community Service</option>
+                                        <option value="fashion_design_styling">Fashion Design/Styling</option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step" id="step8">
+                        <div class="field">
+                            <label class="setup-label">What do you like about this hobby?</label>
+                            <div class="control">
+                                <textarea class="textarea" id="hobbyLikes" name="hobbyLikes" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="prevStep()">Back</button>
+                            </div>
+                            <div class="control">
+                                <button class="button btn-color" type="button" onclick="submitForm()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-red-500">{{ error }}</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        function nextStep() {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep++;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+        }
+
+        function prevStep() {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+        }
+
+        function previewProfilePic(event) {
+            const preview = document.getElementById('profilePicPreview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+            }
+        }
+
+        function submitForm() {
+            // Here you can add code to submit the form data to the backend
+            document.getElementById('setupForm').submit();
+        }
+    </script>
+</body>
+</html>

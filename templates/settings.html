@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Settings</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <style>
+        .title{
+            margin-top: 105px;
+            padding-left: 5px;
+        }
+        .container{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .title{
+                margin-top: 75px;
+            }
+        }
+        </style>
+</head>
+
+<body>
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text" href="/profile">Settings</a>
+        <a href="/profile"><i class="fas  fa-user"></i><span> Profile</span></a>
+    </div>
+
+<!-- Main content -->
+<div class="container">
+    <h1 class="title">Account Settings</h1>
+    <div class="box">
+        <h2 class="subtitle">Change Password</h2>
+        <form method="POST" action="/change_password">
+            <div class="field">
+                <label class="label">Old Password</label>
+                <div class="control">
+                    <input class="input" type="password" name="old_password" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">New Password</label>
+                <div class="control">
+                    <input class="input" type="password" name="new_password" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Confirm New Password</label>
+                <div class="control">
+                    <input class="input" type="password" name="confirm_password" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Change Password</button>
+                </div>
+            </div>
+            <input type="hidden" name="action" value="change_password">
+        </form>
+        {% if error %}
+            <div class="notification is-danger">
+                {{ error }}
+            </div>
+            {% endif %}
+    </div>
+    <div class="box">
+        <h2 class="subtitle">Delete Account</h2>
+        <form action="/delete_account" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-danger" type="submit">Delete My Account</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="box">
+        <h2 class="subtitle">Log Out</h2>
+        <form action="/logout" method="post" onsubmit="return confirm('Are you sure you want to logout?');">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-danger" type="submit">Log Out</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    
+
+
+    <!-- Bottom navigation -->
+    <div class="navbar fixed-bottom">
+        <a href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+    
+</body>
+
+</html>

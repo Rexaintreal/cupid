@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Anonymous Chat</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <style>
+        /* Custom styles for content and message sections */
+        .content {
+            margin-top: 150px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark text color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+    
+        .content h1.title {
+            margin-bottom: 20px; /* Add some space below the title */
+            font-size: 2em; /* Increase title font size */
+            color: #555; /* Slightly darker title color */
+        }
+    
+        .content p {
+            margin-bottom: 15px; /* Add space between paragraphs */
+        }
+    
+        .content .message {
+            padding: 20px; /* Increase message padding */
+            background-color: #fff; /* White background for message */
+            border: 1px solid #ccc; /* Add a border */
+            border-radius: 10px; /* Round the corners */
+        }
+    
+        /* Centering user count */
+        .user-count {
+            margin-bottom: 20px;
+            font-size: 1.2em; /* Larger font size */
+        }
+    
+        /* Scrollable users list */
+        .users-list {
+            max-height: 200px; /* Adjust the maximum height as needed */
+            overflow-y: auto;
+            padding: 10px; /* Add some padding */
+            border: 1px solid #ccc; /* Add a border */
+            border-radius: 5px; /* Round the corners */
+            background-color: #fff; /* White background */
+            margin-bottom: 20px; /* Add some margin bottom */
+        }
+    
+        .users-list ul {
+            color: #333;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+    
+        .users-list ul li {
+            padding: 5px 0;
+        }
+    
+        /* Feedback Button */
+        .feedback-button {
+            text-align: center;
+        }
+    
+        .feedback-button button {
+            font-size: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text" href="/anonymouschat">Anonymous Chat</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+    </div>
+    
+    <!-- Main content -->
+<div class="container">
+    <!-- Content section -->
+    <div class="content">
+        <!-- Title -->
+        <h1 class="title">Coming Soon</h1>
+        <!-- User count -->
+        <p class="user-count">Number of users signed up: {{ user_count }}/150</p>
+        <!-- Message section -->
+        <p class="message">We apologize for the inconvenience. Currently, there aren't enough active users signed up to provide a meaningful anonymous chat experience. We aim to launch this feature once we reach at least 150 users. Thank you for your understanding and patience!</p>
+        <!-- Thank you message for logged-in users -->
+        <p>Thank you to all our logged-in users for their support and patience. Your contribution helps us improve the platform for everyone!</p>
+    </div>
+    <!-- Scrollable users list -->
+    <div class="users-list">
+        <ul class="has-background-white">
+            <!-- Iterating over users and displaying them -->
+            {% for user in users %}
+            <li><i class="fas fa-heart"></i> Thanks a lot {{ user }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Feedback or Error Reporting Button -->
+        <!-- Feedback or Error Reporting Button -->
+    <div class="feedback-button">
+        <a class="button is-success" href="/feedback">Feedback / Report Errors</a>
+    </div>
+
+</div>
+
+    <!-- The navigation menu -->
+    <div class="navbar fixed-bottom">
+        <a href="/home"><i class="fas fa-home"></i> Home</a>
+        <a class="active" href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+</body>
+
+</html>

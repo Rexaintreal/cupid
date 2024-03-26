@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{class_section}}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+    <style>
+        
+    .pack-container {
+        position: relative;
+        display: flex;
+        max-width: 350px;
+        flex-direction: column;
+        border-radius: 12px;
+        background-color: #2E3235;
+        border: 1px solid #fff;
+        padding: 1.6rem;
+        color: #fff;
+        margin: 150px auto; /* Center the container horizontally */
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+      
+      .header {
+        position: relative;
+        margin: 0;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        border-radius: 0;
+        border-bottom: 1px solid #fff;
+        background: transparent;
+        padding-bottom: 1rem;
+        text-align: center;
+      }
+      
+      .title {
+        display: block;
+        font-family: sans-serif;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-transform: uppercase;
+        color: #fff
+      }
+      
+      .price-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 4px;
+        font-family: sans-serif;
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+      
+      .price-container span:first-child {
+        margin-top: 10px;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+      
+      .price-container span:last-child {
+        align-self: flex-end;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+      
+      .lists {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .list {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .list span {
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background-color: rgba(255, 255, 255, 0.185);
+        height: 30px;
+        width: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .list span svg {
+        height: 12px;
+        width: 12px;
+      }
+      
+      .list p {
+        display: block;
+        font-family: sans-serif;
+      }
+      
+      .button-container {
+        margin-top: 20px;
+        padding: 0;
+      }
+      
+      .button-container button {
+        display: block;
+        width: 100%;
+        background-color: #fff;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        color: #000;
+        outline: 0;
+        border: 0;
+        border-radius: 10px;
+      }</style>
+
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/home"><i class="fas fa-right-from-bracket"></i><span> Exit</span></a>
+        <a class="home-text">Subscriptions</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+    </div>
+    <div class="pack-container">
+        <div class="header">
+          <div class="price-container">
+            <span>&#8377;</span>49
+            <span>/month</span>
+          </div>
+        </div>
+        <div>
+          <ul class="lists">
+            <li class="list">
+              <span>
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.5 12.75l6 6 9-13.5" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <p>
+              See who clicked "Match" on your profile
+              </p>
+            </li>
+            <li class="list">
+              <span>
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.5 12.75l6 6 9-13.5" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+              </span>
+              <p>
+      Enjoy priority support.
+              </p>
+            </li>
+            
+          </ul>
+        </div>
+        <div class="button-container">
+            <button type="button" onclick="redirectToInstagram()">
+                Contact Developer
+            </button>
+        </div>
+        
+        <script>
+            function redirectToInstagram() {
+                // Replace 'your_instagram_id' with your actual Instagram ID
+                var instagramId = 'saurabhcodes';
+                
+                // Construct the URL of your Instagram profile
+                var instagramUrl = 'https://www.instagram.com/' + instagramId;
+        
+                // Redirect the user to your Instagram profile
+                window.location.href = instagramUrl;
+            }
+        </script>
+        
+      </div>
+    <!-- The bottom navigation menu -->
+    <div class="navbar fixed-bottom">
+        <a class="active" href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+</body>
+
+</html>

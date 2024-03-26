@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dangrek&display=swap" rel="stylesheet">
+</head>
+
+<body >
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text"href="/home">Matches</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+    </div>
+    <!-- The navigation menu -->
+    <div class="navbar fixed-bottom">
+        <a href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a class="active" href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+<!-- Matched Users -->
+<div class="container matched-users-container">
+    <h1 class="title matched-users-title">Your Matches</h1>
+    <div class="columns is-multiline">
+        {% if matched_users %}
+            {% for match in matched_users %}
+                <div class="column is-6">
+                    <div class="matched-user-card" onmouseover="addHearts(this)" onmouseout="removeHearts(this)">
+                        <div class="ribbon">
+                            <div class="ribbon-content">
+                                Matched
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <div class="user-info">
+                                    <p>{{ match.user1 }}</p>
+                                    <div class="heart-icon">
+                                        <i class="fas fa-heart"></i> <!-- Red heart icon -->
+                                    </div>
+                                    <p>{{ match.user2 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="column is-12">
+            <div class="is-flex is-align-items-center is-justify-content-center" style="height: 200px; color: #000;">
+                <p>No match found</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

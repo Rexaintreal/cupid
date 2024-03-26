@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Admin Panel</h1>
+
+            <h2 class="subtitle">Users from database</h2>
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>password</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in db_users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>
+                            <img src="{{ url_for('pfp', filename=user[1] + '.png') }}" alt="Profile Picture">
+                            <form action="{{ url_for('delete_profile_picture') }}" method="POST">
+                                <input type="hidden" name="username" value="{{ user[1] }}">
+                                <button class="button is-danger" type="submit">Delete Profile Picture</button>
+                            </form>
+                        </td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_user') }}" method="POST">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <button class="button is-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2 class="subtitle">Matched Users</h2>
+            <ul>
+                {% for key, value in matched_users.items() %}
+                <li>{{ key }} - {{ value }}</li>
+                {% endfor %}
+            </ul>
+            <h2 class="subtitle">Users Data</h2>
+            {% for user_data in users_data %}
+            <div class="user-data">
+                <div>Username: {{ user_data['username'] }}</div>
+                <form action="{{ url_for('edit_user_data') }}" method="POST">
+                    <input type="hidden" name="username" value="{{ user_data['username'] }}">
+                    <input type="hidden" name="action" value="edit"> <!-- Add hidden field for action -->
+                    <div>Name: <input type="text" name="new_name" value="{{ user_data['name'] }}"></div>
+                    <div>School: <input type="text" name="new_school" value="{{ user_data['school'] }}"></div>
+                    <div>Bio: <input type="text" name="new_bio" value="{{ user_data['bio'] }}"></div>
+                    <div class="actions">
+                        <input type="submit" value="Edit" class="button is-primary">
+                    </div>
+                </form>
+                <form action="{{ url_for('delete_user_data') }}" method="POST">
+                    <input type="hidden" name="username" value="{{ user_data['username'] }}">
+                    <input type="submit" value="Delete" class="button is-danger">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

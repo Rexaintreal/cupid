@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Moderator Panel</h1>
+            
+            <div class="columns">
+                {% for user in user_data %}
+                <div class="column is-one-third">
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title">{{ user['name'] }}</p>
+                            <p class="subtitle">@{{ user['username'] }}</p>
+                            <div class="content">
+                                <p><strong>Bio:</strong> {{ user['bio'] }}</p>
+                                <p><strong>Class and Section:</strong> {{ user['class'] }} - {{ user['section'] }}</p>
+                                <p><strong>School:</strong> {{ user['school'] }}</p>
+                                <p><strong>Age:</strong> {{ user['age'] }}</p>
+                                <p><strong>Gender:</strong> {{ user['gender'] }}</p>
+                                <p><strong>Hobbies:</strong> {{ user['hobbies'] }}</p>
+                                <p><strong>Hobby Likes:</strong> {{ user['hobby_likes'] }}</p>
+                                
+                                <form action="{{ url_for('edit_user_info') }}" method="POST">
+                                    <input type="hidden" name="username" value="{{ user['username'] }}">
+                                    
+                                    <div class="field">
+                                        <label class="label">Name:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="name" value="{{ user['name'] }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">School Name:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="school" value="{{ user['school'] }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Bio:</label>
+                                        <div class="control">
+                                            <textarea class="textarea" name="bio">{{ user['bio'] }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Class and Section:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="class_section" value="{{ user['class'] }} - {{ user['section'] }}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Age:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="age" value="{{ user['age'] }}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Gender:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="gender" value="{{ user['gender'] }}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Hobbies:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="hobbies" value="{{ user['hobbies'] }}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label class="label">Hobby Likes:</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="hobby_likes" value="{{ user['hobby_likes'] }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="control">
+                                            <button class="button is-primary" type="submit">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>

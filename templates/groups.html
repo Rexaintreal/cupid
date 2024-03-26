@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Groups</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+
+<body>
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text"href="/home">Groups</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+    </div>
+    <!-- The navigation menu -->
+<div class="navbar fixed-bottom">
+    <a href="/home"><i class="fas fa-home"></i> Home</a>
+    <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+    <a class="active" href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+    <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+  </div>
+  <div class="class-container">
+    <div class="scrolling-wrapper">
+        {% for class_section in class_sections %}
+        <a href="/chat/{{ class_section[0] }}-{{ class_section[1] }}" class="classroom-box">
+            <p><strong>Class:</strong> {{ class_section[0] }}</p>
+                <p><strong>Section:</strong> {{ class_section[1] }}</p>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+</div>
+</body>
+</html>

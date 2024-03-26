@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Admin Panel</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Group Admin Login</h1>
+      <!-- Back Button for Admin Panel Route -->
+      <a href="{{ url_for('adminlogin') }}" class="button is-info">Back to Admin Panel</a>
+      {% if classrooms %}
+        <div class="field">
+          <label for="classSelection" class="label">Select Classroom:</label>
+          <div class="control">
+            <div class="select is-fullwidth">
+              <select id="classSelection" name="class_section" onchange="window.location.href = '/groupadmin/chat/' + this.value">
+                {% for class_name in classrooms %}
+                  <option value="{{ class_name[0] }}_{{ class_name[1] }}">{{ class_name[0] }} - {{ class_name[1] }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p>No classroom groups found.</p>
+      {% endif %}
+      <div id="chat-messages"></div>
+    </div>
+  </section>
+</body>
+</html>

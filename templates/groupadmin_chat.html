@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Admin Chat for {{ class_name }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body class="section">
+  <div class="container">
+    <h1 class="title has-text-centered">Group Admin Chat for {{ class_name }}</h1>
+
+    <div class="box">
+      <a href="{{ url_for('groupadmin_route') }}" class="button is-primary">Back</a>
+      {% if messages %}
+        <h2 class="subtitle is-size-5">Chat Messages</h2>
+        <ul class="message-list">
+          {% for i in range(messages|length) %}
+            <li class="message">
+              <p class="sender"><strong>{{ usernames[i]|safe }}:</strong> ({{ message_lengths[i] }} characters)</p>
+              <p class="message-content">{{ messages[i]|safe }}</p>
+              <p class="message-id">ID: {{ message_ids[i]|safe }}</p>
+              <form action="{{ url_for('delete_message', class_name=class_name, message_id=message_ids[i]) }}" method="POST">
+                <button type="submit" class="button is-danger is-small">Delete</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="has-text-centered">No chat messages found for this class.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

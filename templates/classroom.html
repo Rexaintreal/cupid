@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{class_section}}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <style>
+        
+
+        .navbar.is-fixed-bottom .field.has-addons {
+            margin: 0; /* Remove margin */
+            width: 100%;
+        }
+
+        .navbar.is-fixed-bottom .input {
+            flex: 1; /* Allow input to grow */
+            width: 100%; /* Set width to 80% of the parent container */
+            min-width: 200px; /* Set a minimum width for the input */
+            margin-bottom: -5px;
+        }
+
+        .textbar {
+            border: 4px !important;
+            border-color: black !important;
+        }
+
+        .navbar.is-fixed-bottom .button {
+            flex-shrink: 0; /* Prevent button from shrinking */
+            margin-bottom: -5px;
+        }
+
+        body {
+            overflow-y: hidden !important;
+        }
+
+        .message-container {
+            min-height: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin-top: 100px;
+            margin-bottom: 40px;
+            min-width: auto;
+            word-wrap: break-word;
+        }
+
+
+
+        /* Ensure parent elements take up full space */
+        html,
+        body,
+        .columns,
+        .column {
+            height: 100%;
+        }
+
+        /* Adjustments for responsiveness */
+        @media screen and (max-width: 768px) {
+            .column {
+                padding: 0 15px; /* Adjust column padding for smaller screens */
+            }
+        }
+            /* Style for sent messages */
+        .sent-message {
+            text-align: right;
+            background-color: #d3eaf7; /* Light blue background */
+            color: #333; /* Dark text color */
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 10px; /* Adjust margin here */
+        }
+
+        /* Style for received messages */
+        /* Style for received messages */
+        .received-message {
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark text color */
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 10px; /* Adjust margin here */
+            word-wrap: break-word; /* Wrap long words */
+        }
+
+        .received-message-content {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 70%; /* Adjust max-width as needed */
+            word-wrap: break-word; /* Allow text to wrap */
+        }
+
+        .received-message-content .message-text {
+            max-width: 100%; /* Set maximum width for the message text */
+            word-wrap: break-word; /* Allow text to wrap */
+        }
+        .message-text {
+                     max-width: calc(100% - 40px); /* Adjusted max-width to account for profile picture and padding */
+                word-wrap: break-word; /* Allow text to wrap */
+            }
+
+
+        /* Style for the profile picture */
+        .profile-picture {
+            width: 30px; /* Adjust the size as needed */
+            height: 30px; /* Adjust the size as needed */
+            border-radius: 50%; /* Make the image circular */
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px; /* Adjust margin here */
+        }
+
+        .profile-picture {
+            width: 30px; /* Adjust the size as needed */
+            height: 30px; /* Adjust the size as needed */
+            border-radius: 50%; /* Make the image circular */
+            margin-right: 5px; /* Adjust the spacing between the picture and the message text */
+        }
+
+        .dynamic-profile-picture {
+            width: 30px; /* Adjust the width as needed */
+            height: 30px; /* Adjust the height as needed */
+            border-radius: 50%; /* Make the image circular */
+            margin-right: 10px; /* Adjust the spacing between the picture and the message text */
+        }
+        /* Style for the message text */
+        /* Center the username within the message */
+        .message-content {
+            display: flex;
+            align-items: center;
+            word-wrap: break-word;
+        }
+
+    
+
+
+
+    </style>
+    
+</head>
+
+<body>
+    <script>
+        var existing_usernames = "{{ existing_usernames }}";
+    </script>
+    
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/groups"><i class="fas fa-right-from-bracket"></i><span> Exit</span></a>
+        <a class="home-text">{{class_section}}</a>
+        <a href="/profile"><i class="fas fa-user"></i><span> Profile</span></a>
+    </div>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="message-container box" id="message-container">
+                {% for chat in old_chats %}
+                    <div class="message {{ 'sent-message' if chat[2] == username else 'received-message' }}">
+                        {% if chat[0] in existing_usernames %}
+                            <img src="/pfp/{{ chat[0] }}.png" class="profile-picture">
+                        {% else %}
+                            <img src="/pfp/defaultchat.png" class="profile-picture">
+                        {% endif %}
+                        <span class="message-text">{{ chat[0] }}: {{ chat[1] }}</span>
+                    </div>
+                {% endfor %}
+
+
+
+                <!-- Messages will be appended here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            
+            // Function to scroll to the bottom of the message container
+            function scrollToBottom() {
+                var messageContainer = document.getElementById('message-container');
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+        
+            // Call addMessage function whenever a new message is received
+            socket.on('message', function(data) {
+                var messageContainer = document.getElementById('message-container');
+                if (messageContainer) {
+                    var messageDiv = document.createElement('div');
+                    var messageContent = document.createElement('div');
+
+                        // Remove unwanted characters and split the string into an array
+                        var decodedString = "{{ existing_usernames }}";
+                        var cleanedString = decodedString.replace(/\[|\]|'|&#39;/g, ''); // Remove square brackets, single quotes, and HTML entity for single quote
+                        var existingUsernamesArray = cleanedString.split(', ');
+
+                        // Check if the user has a profile picture
+                        var imgSrc;
+                        if (existingUsernamesArray.includes(data.username)) {
+                            imgSrc = '/pfp/' + data.username + '.png';
+                        } else {
+                            imgSrc = '/pfp/defaultchat.png'; // Default profile picture
+                        }
+
+                        // Create an image element for the profile picture
+                        var imgElement = document.createElement('img');
+                        imgElement.src = imgSrc;
+                        imgElement.classList.add('dynamic-profile-picture');
+                        messageContent.appendChild(imgElement);
+
+                        var messageSpan = document.createElement('span');
+                        messageSpan.textContent = data.username + ': ' + data.message;
+                        messageSpan.classList.add('message-text'); // Add the message text class
+
+                        messageContent.appendChild(messageSpan);
+
+                    // Add class for sent or received messages based on the sender
+                    if (data.sender === '{{ username }}') { // Corrected here
+                        messageDiv.classList.add('sent-message');
+                    } else {
+                        messageDiv.classList.add('received-message');
+                        messageContent.classList.add('received-message-content')
+
+                    }
+
+                    // Append the message content container to the message div
+                    messageDiv.appendChild(messageContent);
+
+                    // Append the message div to the message container
+                    messageContainer.appendChild(messageDiv);
+
+                    scrollToBottom(); // Scroll to bottom
+                }
+            });
+
+
+        
+            function sendMessage() {
+                var message = document.getElementById('message-input').value;
+                // Pass sender's identity along with the message
+                socket.emit('message', { message: message, class_section: '{{ class_section }}', username: '{{ username }}' });
+                document.getElementById('message-input').value = '';
+            }
+        
+            socket.emit('join', { class_section: '{{ class_section }}' });
+        
+            window.onbeforeunload = function() {
+                socket.emit('leave', { class_section: '{{ class_section }}' });
+            };
+            document.getElementById('send-button').addEventListener('click', function() {
+                sendMessage();
+            });
+
+            // Attach event listener to send message on pressing Enter key
+            document.getElementById('message-input').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+    
+    
+    <!-- Send message input and button (fixed at the bottom) -->
+    <div class="navbar is-fixed-bottom">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="input textbar" type="text" style="background-color:#fcfcfc ;" id="message-input" placeholder="Type your message...">
+            </div>
+            <div class="control">
+                <button id="send-button" class="button is-primary">
+                    <span class="icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

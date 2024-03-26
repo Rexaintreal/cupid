@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{username}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    <style>
+        
+        body{
+            overflow: hidden;
+        }
+        .profile-picture {
+            border-radius: 50%;
+            width: 75px; /* Adjust the size as needed */
+            height: 75px; /* Adjust the size as needed */
+            object-fit: cover; /* Ensure the image covers the entire area */
+        } 
+        
+        .title{
+            margin-top: 100px
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        .error-message {
+            color: #f14668; /* Adjust the text color */
+            font-size: 0.9rem; /* Adjust the font size */
+            margin-top: 0.5rem; /* Adjust the top margin */
+            display: none; /* Initially hide the error message */
+        }
+       
+    </style>
+</head>
+
+<body>
+    <!-- The top navigation menu -->
+    <div class="topnav">
+        <a href="/settings"><i class="fas fa-cog"></i><span> Settings</span></a>
+        <a class="home-text" href="/profile">Hi {{username}}</a>
+        <a href="/profile"><i class="fas  fa-user"></i><span> Profile</span></a>
+    </div>
+
+    <div class="container is-mobile">
+        <h1 class="title">Edit Profile</h1>
+        {% if error_message %}
+            <div class="notification is-danger">{{ error_message }}</div>
+        {% endif %}
+        
+        <form id="edit-profile-form" action="/edit_profile" method="post" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label">Bio</label>
+                <div class="control">
+                    <textarea class="textarea" name="bio">{{ bio }}</textarea>
+                </div>
+                <p class="error-message">Bio length exceeds the maximum limit.</p>
+
+            </div>
+            <div class="field">
+                <label class="label">School</label>
+                <div class="control">
+                    <input class="input" type="text" name="school" value="{{ school }}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Change Hobbies</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select name="hobbies">
+                            <option value="sports" {% if 'sports' in hobbies %}selected{% endif %}>Sports</option>
+                            <option value="music" {% if 'music' in hobbies %}selected{% endif %}>Music</option>
+                            <option value="reading" {% if 'reading' in hobbies %}selected{% endif %}>Reading</option>
+                            <option value="photography" {% if 'photography' in hobbies %}selected{% endif %}>Photography</option>
+                            <option value="drawing_painting" {% if 'drawing_painting' in hobbies %}selected{% endif %}>Drawing/Painting</option>
+                            <option value="writing_poetry" {% if 'writing_poetry' in hobbies %}selected{% endif %}>Writing/Poetry</option>
+                            <option value="dance" {% if 'dance' in hobbies %}selected{% endif %}>Dance</option>
+                            <option value="cooking_baking" {% if 'cooking_baking' in hobbies %}selected{% endif %}>Cooking/Baking</option>
+                            <option value="gardening" {% if 'gardening' in hobbies %}selected{% endif %}>Gardening</option>
+                            <option value="coding_programming" {% if 'coding_programming' in hobbies %}selected{% endif %}>Coding/Programming</option>
+                            <option value="gaming" {% if 'gaming' in hobbies %}selected{% endif %}>Gaming</option>
+                            <option value="fitness_exercise" {% if 'fitness_exercise' in hobbies %}selected{% endif %}>Fitness/Exercise</option>
+                            <option value="yoga_meditation" {% if 'yoga_meditation' in hobbies %}selected{% endif %}>Yoga/Meditation</option>
+                            <option value="crafting" {% if 'crafting' in hobbies %}selected{% endif %}>Crafting</option>
+                            <option value="diy_projects" {% if 'diy_projects' in hobbies %}selected{% endif %}>DIY Projects</option>
+                            <option value="graphic_design" {% if 'graphic_design' in hobbies %}selected{% endif %}>Graphic Design</option>
+                            <option value="skateboarding" {% if 'skateboarding' in hobbies %}selected{% endif %}>Skateboarding</option>
+                            <option value="martial_arts" {% if 'martial_arts' in hobbies %}selected{% endif %}>Martial Arts</option>
+                            <option value="astronomy" {% if 'astronomy' in hobbies %}selected{% endif %}>Astronomy</option>
+                            <option value="music_production" {% if 'music_production' in hobbies %}selected{% endif %}>Music Production</option>
+                            <option value="acting_theater" {% if 'acting_theater' in hobbies %}selected{% endif %}>Acting/Theater</option>
+                            <option value="volunteering" {% if 'volunteering' in hobbies %}selected{% endif %}>Volunteering/Community Service</option>
+                            <option value="fashion_design_styling" {% if 'fashion_design_styling' in hobbies %}selected{% endif %}>Fashion Design/Styling</option>
+                            <option value="others" {% if 'others' in hobbies %}selected{% endif %}>Others</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="field">
+                <label class="label">Change "What I like about my hobbies"</label>
+                <div class="control">
+                    <input class="input" type="text" name="hobby_likes" value="{{ hobby_likes }}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Profile Picture</label>
+                <div class="control">
+                    <input type="file" id="profile-picture-input" name="profile_picture" onchange="previewProfilePicture()">
+                    <img id="profile-picture-preview" src="{{ profile_picture_url }}" alt="Profile Picture" class="profile-picture">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-success" type="submit">Save Changes</button>
+                </div>
+            </div>
+        </form>
+      
+    </div>
+
+    <div class="navbar fixed-bottom">
+        <a href="/home"><i class="fas fa-home"></i> Home</a>
+        <a href="/anonymouschat"><i class="fas fa-message"></i> Anonymous Chat</a>
+        <a href="/groups"><i class="fas fa-users"></i> Group Chat</a>
+        <a href="/matches"><i class="fas fa-heart-circle-exclamation"></i> Matches</a>
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sign Up</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://kit.fontawesome.com/d6f5400f00.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        function togglePassword(fieldId, icon) {
+            var x = document.getElementById(fieldId);
+            if (x) {
+                if (x.type === "password") {
+                    x.type = "text";
+                    if (icon.querySelector('i').classList.contains('fa-eye')) {
+                        icon.querySelector('i').classList.remove('fa-eye');
+                    }
+                    icon.querySelector('i').classList.add('fa-eye-slash');
+                } else {
+                    x.type = "password";
+                    if (icon.querySelector('i').classList.contains('fa-eye-slash')) {
+                        icon.querySelector('i').classList.remove('fa-eye-slash');
+                    }
+                    icon.querySelector('i').classList.add('fa-eye');
+                }
+            } else {
+                console.error(`Password input field with ID '${fieldId}' not found.`);
+            }
+        }
+    </script>
+    
+    <section class="section">
+        <div class="container custom-container">
+            <div class="columns is-centered">
+                <div class="column is-10">
+                    <h1 class="title has-text-centered">Sign Up</h1>
+                    <form action="#" method="post">
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input class="input" type="email" placeholder="Enter your email" name="email">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Enter your username" name="username">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control input-with-icon">
+                                <input id="password" class="input" type="password" placeholder="Enter your password" name="password">
+                                <span class="toggle-password" onclick="togglePassword('password', this)">
+                                    <i class="fas fa-eye" style="outline: none;"></i>
+                                </span>                            
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button   btn-color is-fullwidth" type="submit">Sign Up</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="has-text-centered">Already have an account? <a href="/login" style="color: #6555e7; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Log in</a></p>
+                    <div class="text-red-500">{{ error }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+
+</html>
