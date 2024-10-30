@@ -1,10 +1,3 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/python-3.8-blue.svg" alt="Python: 3.8">
-  <img src="https://img.shields.io/badge/HTML-5-orange.svg" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS-Bulma-blueviolet.svg" alt="CSS: Bulma">
-  <img src="https://img.shields.io/badge/SQLite-3-003B57.svg" alt="SQLite">
-  <img src="https://img.shields.io/badge/Flask-1.1.2-black.svg" alt="Flask: 1.1.2">
-</p>
 
 <h1 align="center">Cupid's Diary ❤️</h1>
 
@@ -15,6 +8,14 @@
 <p align="center">
   <img src="pfp/cupid_the_god_of_love_reading_.jpeg" alt="Cupid's Diary Banner" width="600">
 </p>
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.8-blue.svg" alt="Python: 3.8">
+  <img src="https://img.shields.io/badge/HTML-5-orange.svg" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS-Bulma-blueviolet.svg" alt="CSS: Bulma">
+  <img src="https://img.shields.io/badge/SQLite-3-003B57.svg" alt="SQLite">
+  <img src="https://img.shields.io/badge/Flask-1.1.2-black.svg" alt="Flask: 1.1.2">
+</p>
+
 
 ## 🏹 Project Vision
 
@@ -122,4 +123,3 @@ The codebase is beginner-friendly, with simple HTML, CSS, and Flask components.
 - [Simple Flask Notes](https://github.com/Rexaintreal/Simple-Flask-Notes) - A Flask Notes App
 - [Key5](https://github.com/Rexaintreal/key5) - Python Keylogger
 
-\
